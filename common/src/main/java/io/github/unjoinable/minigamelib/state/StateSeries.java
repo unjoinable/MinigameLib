@@ -1,5 +1,7 @@
 package io.github.unjoinable.minigamelib.state;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
@@ -55,7 +57,7 @@ public class StateSeries extends State {
     }
 
     @Override
-    protected Duration duration() {
+    protected @NotNull Duration duration() {
         Duration total = Duration.ZERO;
         for (State state : states) {
             total = total.plus(state.duration());
@@ -100,5 +102,4 @@ public class StateSeries extends State {
             states.get(current).end();
         }
     }
-
 }
