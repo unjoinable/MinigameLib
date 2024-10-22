@@ -49,12 +49,10 @@ public interface Arena {
      * @return the location of the specified team
      * @throws IllegalArgumentException if the team's is not present in current instance
      */
-    default @NotNull Coordinate locByTeam(@NotNull Team team) {
-        try {
+    default @NotNull Coordinate locationByTeam(@NotNull Team team) {
+        if  (locations().containsKey(team)) {
             return locations().get(team);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Team not found. " + team.displayName());
-        }
+        } else throw new IllegalArgumentException("Team not found. " + team.displayName());
     }
 
     /**
