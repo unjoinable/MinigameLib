@@ -1,8 +1,10 @@
-package io.github.unjoinable.minigamelib.team;
+package io.github.unjoinable.minigamelib.api.team;
 
 import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -11,7 +13,7 @@ import java.util.List;
  * <p>This interface provides methods to retrieve the team's unique identifier and display name.
  *
  */
-public interface Team {
+public sealed interface Team extends Iterable<Audience> permits TeamImpl {
 
     /**
      * Returns the team's display name.
@@ -21,7 +23,7 @@ public interface Team {
      *
      * @return the team's display name
      */
-    @NotNull String displayName();
+    @NotNull Component displayName();
 
     /**
      * Returns the maximum number of players allowed in this team.
@@ -67,7 +69,7 @@ public interface Team {
         int size = this.players().size();
 
         if (size >= maxPlayers()) {
-            throw new IllegalStateException("Expected upto " + maxPlayers() + " players instead found " + size);
+            throw new IllegalStateException("Expected upto " + maxPlayers() + " players");
         }
 
         this.players().add(audience);
@@ -88,5 +90,23 @@ public interface Team {
         if (!this.players().remove(audience)) {
             throw new IllegalStateException("Player not found! " + audience);
         }
+    }
+
+    /**
+     * Checks if the specified player is currently associated/playing with/within this team.
+     *
+     * <p>This method returns true if the specified player is found in the team's list of players, otherwise false.
+     * The order of the players in the list is not guaranteed to be consistent across different method calls.
+     *
+     * @param audience the {@link Audience} instance representing the player to be checked for presence in the team
+     * @return true if the player is found in the team, false otherwise
+     */
+    default boolean isPresent(@NotNull Audience audience) {
+        return this.players().contains(audience);
+    }
+
+    @Override @NotNull
+    default Iterator<Audience> iterator() {
+        return this.players().iterator();
     }
 }

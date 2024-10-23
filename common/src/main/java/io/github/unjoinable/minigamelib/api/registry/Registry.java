@@ -1,4 +1,4 @@
-package io.github.unjoinable.minigamelib.registry;
+package io.github.unjoinable.minigamelib.api.registry;
 
 import org.jetbrains.annotations.NotNull;
 

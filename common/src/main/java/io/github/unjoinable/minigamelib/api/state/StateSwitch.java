@@ -1,4 +1,4 @@
-package io.github.unjoinable.minigamelib.state;
+package io.github.unjoinable.minigamelib.api.state;
 
 /**
  * Represents a mechanism for managing and switching between different states.

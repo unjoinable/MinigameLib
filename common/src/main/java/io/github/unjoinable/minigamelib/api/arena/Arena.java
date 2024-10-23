@@ -1,16 +1,17 @@
-package io.github.unjoinable.minigamelib.arena;
+package io.github.unjoinable.minigamelib.api.arena;
 
-import io.github.unjoinable.minigamelib.team.Team;
-import io.github.unjoinable.minigamelib.utils.Coordinate;
+import io.github.unjoinable.minigamelib.api.team.Team;
+import io.github.unjoinable.minigamelib.api.utils.Coordinate;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
  * Represents an arena in a minigame.
  */
-public interface Arena {
+public sealed interface Arena extends Iterable<Team> permits ArenaImpl {
 
     /**
      * Returns the name of the arena.
@@ -53,7 +54,6 @@ public interface Arena {
         if  (locations().containsKey(team)) {
             return locations().get(team);
         } else throw new IllegalArgumentException("Team not found. " + team.displayName());
-
     }
 
     /**
@@ -64,5 +64,10 @@ public interface Arena {
      */
     default void addLoc(@NotNull Team team, @NotNull Coordinate loc) {
         locations().put(team, loc);
+    }
+
+    @Override @NotNull
+    default Iterator<Team> iterator() {
+        return locations().keySet().iterator();
     }
 }

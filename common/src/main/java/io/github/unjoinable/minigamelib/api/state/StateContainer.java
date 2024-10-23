@@ -1,4 +1,4 @@
-package io.github.unjoinable.minigamelib.state;
+package io.github.unjoinable.minigamelib.api.state;
 
 import java.util.Collection;
 import java.util.Iterator;

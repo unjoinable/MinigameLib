@@ -1,4 +1,4 @@
-package io.github.unjoinable.minigamelib.utils;
+package io.github.unjoinable.minigamelib.api.utils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -18,7 +18,7 @@ public record Coordinate(double x,
                          float yaw,
                          float pitch) {
 
-    public static Coordinate ZERO = new Coordinate(0D, 0D, 0D, 0F, 0F);
+    public static final Coordinate ZERO = new Coordinate(0D, 0D, 0D, 0F, 0F);
 
     /**
      * Creates a new Coordinate instance with the specified x, y, and z coordinates,

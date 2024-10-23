@@ -1,4 +1,4 @@
-package io.github.unjoinable.minigamelib.state;
+package io.github.unjoinable.minigamelib.api.state;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
