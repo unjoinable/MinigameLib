@@ -10,15 +10,16 @@ repositories {
     mavenCentral()
 }
 
+tasks.withType<JavaCompile>().configureEach {
+    javaCompiler = javaToolchains.compilerFor {
+        languageVersion = JavaLanguageVersion.of(23)
+    }
+}
+
 subprojects {
     apply(plugin = "java")
     apply(plugin = "maven-publish")
 
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(23)
-        }
-    }
 
     dependencies {
         compileOnly("org.jetbrains:annotations:26.0.1")
