@@ -1,3 +1,2 @@
 rootProject.name = "MiniGameLib"
-include("common", "minestom", "paper")
-include("minestom")
+include("common", "minestom")
