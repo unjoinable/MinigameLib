@@ -2,10 +2,9 @@ plugins {
     java
     `maven-publish`
 }
-
+val projectVersion = "0.1.0"
 group = "io.github.unjoinable"
-version = "1.0"
-
+version = projectVersion
 
 repositories {
     mavenCentral()
@@ -24,8 +23,8 @@ subprojects {
         publications {
             create<MavenPublication>("maven") {
                 groupId = "io.github.unjoinable.minigamelib"
-                artifactId = "MinigameLib"
-                version = "1.0"
+                artifactId = project.name
+                version = projectVersion
 
                 from(components["java"])
             }
