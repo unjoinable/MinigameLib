@@ -1,49 +1,39 @@
 plugins {
     java
     `maven-publish`
-    id("com.github.johnrengelman.shadow") version "8.1.1"
-}
-
-val projectVersion = "0.1.0"
-
-tasks.withType<JavaCompile>().configureEach {
-    javaCompiler = javaToolchains.compilerFor {
-        languageVersion = JavaLanguageVersion.of(23)
-    }
 }
 
 allprojects {
+    apply(plugin = "java")
+    apply(plugin = "maven-publish")
+
     group = "io.github.unjoinable"
-    version = projectVersion
+    version = "0.1.0"
+
+    java {
+        toolchain.languageVersion = JavaLanguageVersion.of(21)
+        withSourcesJar()
+        withJavadocJar()
+    }
 
     repositories {
         mavenCentral()
     }
-}
-
-subprojects {
-    apply(plugin = "java")
-    apply(plugin = "maven-publish")
-    apply(plugin = "com.github.johnrengelman.shadow")
 
     dependencies {
         implementation("org.slf4j:slf4j-api:2.0.16")
+        compileOnly("net.kyori:adventure-api:4.17.0")
     }
 
     publishing {
         publications {
             create<MavenPublication>("maven") {
-                groupId = "io.github.unjoinable.minigamelib"
-                artifactId = project.name
-                version = projectVersion
-
-                afterEvaluate {
-                    val shadowJar = tasks.findByName("shadowJar")
-                    if (shadowJar == null) from(components["java"])
-                    else artifact(shadowJar)
-                }
+                from(components["java"])
             }
+        }
+
+        repositories {
+            mavenLocal()
         }
     }
 }
-

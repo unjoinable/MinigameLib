@@ -10,7 +10,7 @@ import java.time.Instant;
  * Represents a state in a finite state machine.
  * This abstract class provides a framework for implementing states
  * with lifecycle methods and state tracking.
- * </p>
+ * 
  * Inspired by github.com/Minikloon/FSMgasm
  * @author Minikloon
  */
