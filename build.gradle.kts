@@ -2,13 +2,8 @@ plugins {
     java
     `maven-publish`
 }
-val projectVersion = "0.1.0"
-group = "io.github.unjoinable"
-version = projectVersion
 
-repositories {
-    mavenCentral()
-}
+val projectVersion = "0.1.0"
 
 tasks.withType<JavaCompile>().configureEach {
     javaCompiler = javaToolchains.compilerFor {
@@ -16,13 +11,18 @@ tasks.withType<JavaCompile>().configureEach {
     }
 }
 
-subprojects {
-    apply(plugin = "java")
-    apply(plugin = "maven-publish")
+allprojects {
+    group = "io.github.unjoinable"
+    version = projectVersion
 
     repositories {
         mavenCentral()
     }
+}
+
+subprojects {
+    apply(plugin = "java")
+    apply(plugin = "maven-publish")
 
     dependencies {
         implementation("org.slf4j:slf4j-api:2.0.16")
