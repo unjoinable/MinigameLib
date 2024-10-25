@@ -37,9 +37,13 @@ subprojects {
                 artifactId = project.name
                 version = projectVersion
 
-                from(components["java"])
-                artifact(tasks["shadowJar"])
+                afterEvaluate {
+                    val shadowJar = tasks.findByName("shadowJar")
+                    if (shadowJar == null) from(components["java"])
+                    else artifact(shadowJar)
+                }
             }
         }
     }
 }
+
