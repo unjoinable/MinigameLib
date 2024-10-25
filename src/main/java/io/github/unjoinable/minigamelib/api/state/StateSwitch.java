@@ -3,7 +3,7 @@ package io.github.unjoinable.minigamelib.api.state;
 /**
  * Represents a mechanism for managing and switching between different states.
  * This class allows for controlled transitions between various states in a system.
- * </p>
+ * 
  * Inspired by github.com/Minikloon/FSMgasm
  * @author Minikloon
  */
