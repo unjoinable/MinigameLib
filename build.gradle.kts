@@ -1,6 +1,7 @@
 plugins {
     java
     `maven-publish`
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 val projectVersion = "0.1.0"
@@ -23,6 +24,7 @@ allprojects {
 subprojects {
     apply(plugin = "java")
     apply(plugin = "maven-publish")
+    apply(plugin = "com.github.johnrengelman.shadow")
 
     dependencies {
         implementation("org.slf4j:slf4j-api:2.0.16")
@@ -36,6 +38,7 @@ subprojects {
                 version = projectVersion
 
                 from(components["java"])
+                artifact(tasks["shadowJar"])
             }
         }
     }
