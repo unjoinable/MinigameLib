@@ -1,4 +1,4 @@
-package io.github.unjoinable.minigamelib.api.state;
+package io.github.unjoinable.minigamelib.minestom.api.state;
 
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.Task;
