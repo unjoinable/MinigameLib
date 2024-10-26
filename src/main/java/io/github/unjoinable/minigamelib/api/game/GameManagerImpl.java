@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-public class GameManagerImpl implements GameManager {
+public class GameManagerImpl extends GameManager {
     private final Set<Game> games = new HashSet<>();
 
     @Override

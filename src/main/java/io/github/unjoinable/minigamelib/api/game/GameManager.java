@@ -8,9 +8,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-public interface GameManager {
+public abstract class GameManager {
 
-    @NotNull Set<Game> games();
+    public abstract @NotNull Set<Game> games();
 
     //default methods
 
@@ -20,7 +20,7 @@ public interface GameManager {
      * @param audience The player or audience participating in the game.
      * @return An {@link Optional} containing the {@link Game} instance if found, or an empty {@link Optional} if not found.
      */
-    default @NotNull Optional<Game> getGameByPlayer(@NotNull Audience audience) {
+    public @NotNull Optional<Game> getGameByPlayer(@NotNull Audience audience) {
         return games().stream().filter(game -> {
             boolean containsPlayer = false;
             for (Audience player : game.players()) {
@@ -36,7 +36,7 @@ public interface GameManager {
      * @param uuid The unique identifier of the game instance.
      * @return An {@link Optional} containing the {@link Game} instance if found, or an empty {@link Optional} if not found.
      */
-    default @NotNull Optional<Game> getGameByUUID(@NotNull UUID uuid) {
+    public @NotNull Optional<Game> getGameByUUID(@NotNull UUID uuid) {
         return games().stream().filter(game -> game.uuid() == uuid).findFirst();
     }
 
@@ -46,7 +46,7 @@ public interface GameManager {
      * @return An {@link Optional} containing the {@link Game} instance with the highest number of players, or an
      * empty {@link Optional} if no game has players or there are no games present.
      */
-    default @NotNull Optional<? extends Game> getGameWithHighestPlayers() {
+    public @NotNull Optional<Game> getGameWithHighestPlayers() {
         return games().stream().max(Comparator.comparingInt(game -> game.players().size()));
     }
 
@@ -56,7 +56,7 @@ public interface GameManager {
      * @param game The {@link Game} instance to be added.
      * @throws IllegalStateException if the {@link Game} instance is already added.
      */
-    default void addGameInstance(@NotNull Game game) {
+    public void addGameInstance(@NotNull Game game) {
         if (!games().add(game)) {
             throw new IllegalStateException("Game Instance is already added!");
         }
@@ -68,7 +68,7 @@ public interface GameManager {
      * @param game The {@link Game} instance to be removed.
      * @throws IllegalStateException if the {@link Game} instance is not present.
      */
-    default void removeGameInstance(@NotNull Game game) {
+    public void removeGameInstance(@NotNull Game game) {
         if (!games().remove(game)) {
             throw new IllegalStateException("Game Instance is not present!");
         }
