@@ -33,6 +33,15 @@ public class StateSeries extends State {
     }
 
     /**
+     * Adds a new state to the series
+     *
+     * @param state The new State to be added to the series
+     */
+    public void add(State state) {
+        this.states.add(state);
+    }
+
+    /**
      * Adds a new state to the series, inserting it immediately after the current state.
      * This allows for dynamic modification of the series during execution.
      *
