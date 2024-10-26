@@ -91,7 +91,7 @@ public abstract class State {
         try {
             onStart();
         } catch (Exception e) {
-            logger.error("Exception during {} start", this.getClass().getName(), e);
+            logger.warn("Exception during {} start", this.getClass().getName(), e);
         }
     }
 
@@ -108,7 +108,7 @@ public abstract class State {
         try {
             onEnd();
         } catch (Exception e) {
-            logger.error("Exception during {} end", this.getClass().getName(), e);
+            logger.warn("Exception during {} end", this.getClass().getName(), e);
         }
     }
 
@@ -132,7 +132,7 @@ public abstract class State {
         try {
             onUpdate();
         } catch (Exception e) {
-            logger.error("Exception during {} update", this.getClass().getName(), e);
+            logger.warn("Exception during {} update", this.getClass().getName(), e);
         }
         updating = false;
     }

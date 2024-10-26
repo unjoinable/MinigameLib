@@ -99,8 +99,7 @@ public class StateSeries extends State {
                 end();
                 return;
             }
-
-            state.start();
+            states.get(current).start();
         }
 
     }
