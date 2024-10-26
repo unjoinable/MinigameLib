@@ -1,11 +1,13 @@
 plugins {
     java
     `maven-publish`
+    id("com.gradleup.shadow") version "8.3.3"
 }
 
 allprojects {
     apply(plugin = "java")
     apply(plugin = "maven-publish")
+    apply(plugin = "com.gradleup.shadow")
 
     group = "io.github.unjoinable"
     version = "0.1.0"
@@ -14,6 +16,12 @@ allprojects {
         toolchain.languageVersion = JavaLanguageVersion.of(21)
         withSourcesJar()
         withJavadocJar()
+    }
+
+    tasks {
+        build {
+            dependsOn(shadowJar)
+        }
     }
 
     repositories {
@@ -27,9 +35,12 @@ allprojects {
 
     publishing {
         publications {
-            create<MavenPublication>("maven") {
-                from(components["java"])
+            create<MavenPublication>("shadow") {
+                artifact(tasks.named("shadowJar").get())
             }
+//            create<MavenPublication>("maven") {
+//                from(components["java"])
+//            }
         }
 
         repositories {
