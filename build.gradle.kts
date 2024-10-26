@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     java
     `maven-publish`
@@ -26,7 +28,6 @@ allprojects {
 
     repositories {
         mavenCentral()
-        mavenLocal()
     }
 
     dependencies {
@@ -34,27 +35,14 @@ allprojects {
         compileOnly("net.kyori:adventure-api:4.17.0")
     }
 
-    afterEvaluate {
-        publishing {
-            publications {
-                create<MavenPublication>("Library") {
-                    from(components["java"])
-                    artifact(tasks["sourceJar"])
-                    tasks.findByName("shadowJar")?.let {
-                        artifact(tasks["shadowJar"])
-                    }
-                }
-
-//                create<MavenPublication>("shadow") {
-//                    artifact(tasks.named("shadowJar").get())
-//                }
-//            create<MavenPublication>("maven") {
-//                from(components["java"])
-//            }
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                from(components["java"])
             }
-            repositories {
-                mavenLocal()
-            }
+        }
+        repositories {
+            mavenLocal()
         }
     }
 }
