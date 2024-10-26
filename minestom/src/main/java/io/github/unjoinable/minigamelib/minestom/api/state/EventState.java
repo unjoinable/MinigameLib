@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
  * @param <T> The type of event this State requires / depends on
  */
 public abstract class EventState<T extends Event> extends State implements EventListener<T> {
+    private final GlobalEventHandler globalEvtHandler;
 
     /**
      * Automatically registers event to the provided event handler.
@@ -20,7 +21,18 @@ public abstract class EventState<T extends Event> extends State implements Event
      * @param globalEvtHandler The global event handler of Server instance
      */
     public EventState(@NotNull GlobalEventHandler globalEvtHandler) {
+        this.globalEvtHandler =  globalEvtHandler;
+    }
+
+    @Override
+    public void start() {
+        super.start();
         globalEvtHandler.addListener(this);
     }
 
+    @Override
+    public void end() {
+        super.end();
+        globalEvtHandler.removeListener(this);
+    }
 }
