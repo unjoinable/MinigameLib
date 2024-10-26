@@ -10,7 +10,7 @@ import java.time.Instant;
  * Represents a state in a finite state machine.
  * This abstract class provides a framework for implementing states
  * with lifecycle methods and state tracking.
- * 
+ * <p>
  * Inspired by github.com/Minikloon/FSMgasm
  * @author Minikloon
  */
@@ -77,12 +77,24 @@ public abstract class State {
     //Additional methods...
 
     /**
+     * Freezes/Unfreezes the state as per the argument
+     *
+     * @param frozen If the state should be frozen.
+     */
+    public void freeze(boolean frozen) {
+        this.frozen = frozen;
+    }
+
+    /**
      * Starts the state if it hasn't been started already.
      * It calls the onStart() method.
      */
     public void start() {
         synchronized (this) {
-            if (started || ended) return;
+            if (started || ended) {
+                return;
+            }
+
             started = true;
         }
 
@@ -91,7 +103,7 @@ public abstract class State {
         try {
             onStart();
         } catch (Exception e) {
-            logger.error("Exception during {} start", this.getClass().getName(), e);
+            logger.warn("Exception during {} start", this.getClass().getName(), e);
         }
     }
 
@@ -101,14 +113,16 @@ public abstract class State {
      */
     public void end() {
         synchronized (this) {
-            if (!started || ended) return;
+            if (!started || ended) {
+                return;
+            }
             ended = true;
         }
 
         try {
             onEnd();
         } catch (Exception e) {
-            logger.error("Exception during {} end", this.getClass().getName(), e);
+            logger.warn("Exception during {} end", this.getClass().getName(), e);
         }
     }
 
@@ -120,20 +134,18 @@ public abstract class State {
      */
     public void update() {
         synchronized (this) {
-            if (!started || ended || updating) return;
+            if (!started || ended || updating) {
+                return;
+            }
             updating = true;
-        }
-
-        if (!frozen && isReadytoEnd()) {
-            end();
-            return;
         }
 
         try {
             onUpdate();
         } catch (Exception e) {
-            logger.error("Exception during {} update", this.getClass().getName(), e);
+            logger.warn("Exception during {} update", this.getClass().getName(), e);
         }
+
         updating = false;
     }
 

@@ -1,15 +1,14 @@
 package io.github.unjoinable.minigamelib.api.state;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.*;
 
 public abstract class StateContainer extends State implements Iterable<State> {
     protected final List<State> states;
 
     public StateContainer() {
-        this.states = new LinkedList<>();
+        this.states = new ArrayList<>();
     }
 
     public void add(State state) {
@@ -20,9 +19,12 @@ public abstract class StateContainer extends State implements Iterable<State> {
         this.states.addAll(newStates);
     }
 
+    public void freeze(boolean freeze) {
+        states.forEach(state -> state.freeze(freeze));
+    }
 
     @Override
-    public Iterator<State> iterator() {
+    public @NotNull Iterator<State> iterator() {
         return states.iterator();
     }
 }

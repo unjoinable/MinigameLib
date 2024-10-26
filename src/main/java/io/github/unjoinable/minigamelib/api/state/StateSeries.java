@@ -1,6 +1,8 @@
 package io.github.unjoinable.minigamelib.api.state;
 
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -10,10 +12,19 @@ import java.util.List;
  * Represents a series of states that can be executed in sequence.
  * This class extends the State class and manages a list of states.
  */
-public class StateSeries extends State {
+public class StateSeries extends StateContainer {
+    private static final Logger logger = LoggerFactory.getLogger(StateSeries.class);
     protected int current = 0;
     protected boolean skipping = false;
     protected final List<State> states;
+
+    /**
+     * Constructs a new StateSeries with given list of states.
+     * @param states The initializing states.
+     */
+    public StateSeries(List<State> states) {
+        this.states = states;
+    }
 
     /**
      * Constructs a new StateSeries with an empty list of states.
@@ -30,15 +41,6 @@ public class StateSeries extends State {
      */
     public void skip() {
         skipping = true;
-    }
-
-    /**
-     * Adds a new state to the series
-     *
-     * @param state The new State to be added to the series
-     */
-    public void add(State state) {
-        this.states.add(state);
     }
 
     /**
@@ -81,34 +83,55 @@ public class StateSeries extends State {
             return;
         }
 
-        states.get(current).start();
+        try {
+            states.get(current).start();
+        } catch (Exception e) {
+            logger.warn("State doesn't exist at index {} whilst starting.", current, e);
+        }
     }
 
     @Override
     protected void onUpdate() {
-         State state = states.get(current);
-         state.update();
+        try {
+            State state = states.get(current);
 
-        if((state.isReadytoEnd() && !state.frozen()) || skipping) {
-            if (skipping) skipping = false;
+            state.update();
 
-            state.end();
-            ++current;
+            if(state.isReadytoEnd() && !state.frozen() || skipping) {
+                if (skipping) {
+                    skipping = false;
+                }
 
-            if(current >= states.size()) {
-                end();
-                return;
+                state.end();
+                if(++current >= states.size()) {
+                    end();
+                    return;
+                }
             }
-
-            state.start();
+        } catch (Exception e) {
+            logger.warn("State doesn't exist at index {} whilst updating.", current, e);
         }
 
+        try {
+            states.get(current).start();
+        } catch (Exception e) {
+            logger.warn("State doesn't exist at index {} whilst updating.", current, e);
+        }
     }
 
     @Override
     protected void onEnd() {
         if(current < states.size()) {
-            states.get(current).end();
+            try {
+                states.get(current).end();
+            } catch (Exception e) {
+                logger.warn("State doesn't exist at index {} whilst ending.", current, e);
+            }
         }
+    }
+
+    @Override
+    public boolean isReadytoEnd() {
+        return (current == states.size() - 1) && states.get(current).isReadytoEnd();
     }
 }
