@@ -124,7 +124,7 @@ public abstract class State {
             updating = true;
         }
 
-        if (!frozen && !isReadytoEnd()) {
+        if (!frozen && isReadytoEnd()) {
             end();
             return;
         }
