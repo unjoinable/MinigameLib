@@ -3,7 +3,7 @@ package io.github.unjoinable.minigamelib.api.state;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +20,7 @@ public class StateSeries extends State {
      * The series is initialized with no states, and states can be added later.
      */
     public StateSeries() {
-        this.states = new LinkedList<>();
+        this.states = new ArrayList<>();
     }
 
     /**
