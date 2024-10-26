@@ -1,0 +1,17 @@
+name: jitpack-build
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  jitpack:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Request master-SNAPSHOT from JitPack
+      run: |
+        # timeout in 30 seconds to avoid waiting for build
+        curl -s -m 30 https://jitpack.io/com/github/unjoinable/minigamelib/master-SNAPSHOT/
