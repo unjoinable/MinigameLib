@@ -1,0 +1,6 @@
+jdk:
+  - openjdk23
+
+before_install:
+  - sdk install java 23.0.1-zulu
+  - sdk use java 23.0.1-zulu

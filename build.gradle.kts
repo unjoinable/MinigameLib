@@ -15,7 +15,7 @@ allprojects {
     version = "0.1.0"
 
     java {
-        toolchain.languageVersion = JavaLanguageVersion.of(21)
+        toolchain.languageVersion = JavaLanguageVersion.of(23)
         withSourcesJar()
         withJavadocJar()
     }
