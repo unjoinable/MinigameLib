@@ -21,7 +21,7 @@ public class ScheduledStateSeries extends StateSeries {
     protected void onStart() {
         super.onStart();
         task = MinecraftServer.getSchedulerManager().scheduleTask(
-                this::update,
+                this::onUpdate,
                 TaskSchedule.immediate(),
                 TaskSchedule.millis(interval));
     }
