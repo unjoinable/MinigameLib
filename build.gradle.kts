@@ -34,18 +34,27 @@ allprojects {
         compileOnly("net.kyori:adventure-api:4.17.0")
     }
 
-    publishing {
-        publications {
-            create<MavenPublication>("shadow") {
-                artifact(tasks.named("shadowJar").get())
-            }
+    afterEvaluate {
+        publishing {
+            publications {
+                create<MavenPublication>("Library") {
+                    from(components["java"])
+                    artifact(tasks["sourceJar"])
+                    tasks.findByName("shadowJar")?.let {
+                        artifact(tasks["shadowJar"])
+                    }
+                }
+
+//                create<MavenPublication>("shadow") {
+//                    artifact(tasks.named("shadowJar").get())
+//                }
 //            create<MavenPublication>("maven") {
 //                from(components["java"])
 //            }
-        }
-
-        repositories {
-            mavenLocal()
+            }
+            repositories {
+                mavenLocal()
+            }
         }
     }
 }
