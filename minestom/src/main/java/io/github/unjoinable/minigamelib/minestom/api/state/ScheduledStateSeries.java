@@ -1,5 +1,6 @@
 package io.github.unjoinable.minigamelib.minestom.api.state;
 
+import io.github.unjoinable.minigamelib.api.state.StateSeries;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.timer.Task;
 import net.minestom.server.timer.TaskSchedule;
