@@ -13,4 +13,5 @@ jobs:
 
     - name: Request master-SNAPSHOT from JitPack
       run: |
-        curl -s -m https://jitpack.io/com/github/unjoinable/minigamelib/master-SNAPSHOT/
+        curl -s -m 300 https://jitpack.io/com/github/unjoinable/minigamelib/master-SNAPSHOT/
+        #timeout in 6mins.
