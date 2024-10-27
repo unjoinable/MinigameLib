@@ -12,28 +12,33 @@ import java.util.*;
 /**
  * Represents a game instance in a minigame.
  */
-public sealed interface Game permits GameImpl {
+public abstract class Game {
 
     /**
      * Retrieves the arena associated with the game.
      *
      * @return the arena associated with the game
      */
-    @NotNull Arena arena();
+    public abstract @NotNull Arena arena();
 
     /**
      * Retrieves the unique identifier (UUID) associated with the game instance.
      *
      * @return the unique identifier (UUID) of the game instance
      */
-    @NotNull UUID uuid();
+    public abstract @NotNull UUID uuid();
 
     /**
      * Retrieves the state series associated with the game instance.
      *
      * @return the state series associated with the game instance
      */
-     @NotNull StateSeries stateSeries();
+     public abstract @NotNull StateSeries stateSeries();
+
+    /**
+     * A method ran while starting a mini-game.
+     */
+    public abstract void start();
 
     //default methods
 
@@ -42,7 +47,7 @@ public sealed interface Game permits GameImpl {
      *
      * @return a set of teams participating in the game
      */
-    default @NotNull Set<Team> teams() {
+    public @NotNull Set<Team> teams() {
         return arena().locations().keySet();
     }
 
@@ -51,7 +56,7 @@ public sealed interface Game permits GameImpl {
      *
      * @return an iterator over all audiences in the game
      */
-    default @NotNull List<Audience> players() {
+    public @NotNull List<Audience> players() {
         List<Audience> audiences = new ArrayList<>();
         for (Team team : teams()) { //iterating on all teams
             for (Audience audience : team) { //iterating on players of a team
@@ -66,7 +71,7 @@ public sealed interface Game permits GameImpl {
      *
      * @param message the message to be broadcasted
      */
-    default void broadcast(@NotNull Component message) {
+    public void broadcast(@NotNull Component message) {
         for (Audience player : players()) {
             player.sendMessage(message);
         }

@@ -13,7 +13,7 @@ import java.util.List;
  * <p>This interface provides methods to retrieve the team's unique identifier and display name.
  *
  */
-public sealed interface Team extends Iterable<Audience> permits TeamImpl {
+public interface Team extends Iterable<Audience> {
 
     /**
      * Returns the team's display name.

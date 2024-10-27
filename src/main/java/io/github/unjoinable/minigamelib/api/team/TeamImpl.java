@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This an example team... though I recommend you implement Team your self.
  * Represents a team in a game.
  *
  * <p>This record provides a simple and immutable representation of a team, with the following parameters:

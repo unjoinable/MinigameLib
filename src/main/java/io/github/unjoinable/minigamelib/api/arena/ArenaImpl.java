@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Just an example team its recommend to implement Arena for your minigame.
  * Represents an arena in a minigame.
  *
  * @param name          The name of the arena.

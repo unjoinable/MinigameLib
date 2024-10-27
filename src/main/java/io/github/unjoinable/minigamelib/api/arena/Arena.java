@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Represents an arena in a minigame.
  */
-public sealed interface Arena extends Iterable<Team> permits ArenaImpl {
+public interface Arena extends Iterable<Team> {
 
     /**
      * Returns the name of the arena.
